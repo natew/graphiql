@@ -1,7 +1,10 @@
+// keep consistent with codemirror:
+// https://github.com/codemirror/CodeMirror/blob/ed8dfeb5e2/src/util/browser.js#L17
+const isMacOs = /Mac OS X 1\d\D([8-9]|\d\d)\D/.test(navigator.userAgent);
+
 const commonKeys = {
   // Persistent search box in Query Editor
-  'Cmd-F': 'findPersistent',
-  'Ctrl-F': 'findPersistent',
+  [isMacOs ? "Cmd-F" : "Ctrl-F"]: "findPersistent",
 
   // Editor improvements
   "Ctrl-Left": "goSubwordLeft",
