@@ -4,11 +4,12 @@
  *  This source code is licensed under the MIT license found in the
  *  LICENSE file in the root directory of this source tree.
  */
+import PropTypes from 'prop-types'
+import React from 'react'
 
-import React from 'react';
-import PropTypes from 'prop-types';
+import commonKeys from '../utility/commonKeys'
+import onHasCompletion from '../utility/onHasCompletion'
 
-import onHasCompletion from '../utility/onHasCompletion';
 
 /**
  * VariableEditor
@@ -131,18 +132,7 @@ export class VariableEditor extends React.Component {
           }
         },
 
-        // Persistent search box in Query Editor
-        'Cmd-F': 'findPersistent',
-        'Ctrl-F': 'findPersistent',
-        'Cmd-G': 'findPersistent',
-        'Ctrl-G': 'findPersistent',
-
-        // Editor improvements
-        'Ctrl-Left': 'goSubwordLeft',
-        'Ctrl-Right': 'goSubwordRight',
-        'Alt-Left': 'goGroupLeft',
-        'Alt-Right': 'goGroupRight',
-      },
+        ...commonKeys,
     });
 
     this.editor.on('change', this._onEdit);

@@ -4,10 +4,12 @@
  *  This source code is licensed under the MIT license found in the
  *  LICENSE file in the root directory of this source tree.
  */
+import PropTypes from 'prop-types'
+import React from 'react'
+import ReactDOM from 'react-dom'
 
-import React from 'react';
-import ReactDOM from 'react-dom';
-import PropTypes from 'prop-types';
+import commonKeys from '../utility/commonKeys'
+
 
 /**
  * ResultViewer
@@ -25,37 +27,37 @@ export class ResultViewer extends React.Component {
     editorTheme: PropTypes.string,
     ResultsTooltip: PropTypes.any,
     ImagePreview: PropTypes.any,
-  };
+  }
   constructor() {
-    super();
+    super()
   }
 
   componentDidMount() {
     // Lazily require to ensure requiring GraphiQL outside of a Browser context
     // does not produce an error.
-    const CodeMirror = require('codemirror');
-    require('codemirror/addon/fold/foldgutter');
-    require('codemirror/addon/fold/brace-fold');
-    require('codemirror/addon/dialog/dialog');
-    require('codemirror/addon/search/search');
-    require('codemirror/addon/search/searchcursor');
-    require('codemirror/addon/search/jump-to-line');
-    require('codemirror/keymap/sublime');
-    require('codemirror-graphql/results/mode');
+    const CodeMirror = require('codemirror')
+    require('codemirror/addon/fold/foldgutter')
+    require('codemirror/addon/fold/brace-fold')
+    require('codemirror/addon/dialog/dialog')
+    require('codemirror/addon/search/search')
+    require('codemirror/addon/search/searchcursor')
+    require('codemirror/addon/search/jump-to-line')
+    require('codemirror/keymap/sublime')
+    require('codemirror-graphql/results/mode')
 
     if (this.props.ResultsTooltip || this.props.ImagePreview) {
-      require('codemirror-graphql/utils/info-addon');
-      const tooltipDiv = document.createElement('div');
+      require('codemirror-graphql/utils/info-addon')
+      const tooltipDiv = document.createElement('div')
       CodeMirror.registerHelper(
         'info',
         'graphql-results',
         (token, options, cm, pos) => {
-          const Tooltip = this.props.ResultsTooltip;
-          const ImagePreview = this.props.ImagePreview;
+          const Tooltip = this.props.ResultsTooltip
+          const ImagePreview = this.props.ImagePreview
 
-          const infoElements = [];
+          const infoElements = []
           if (Tooltip) {
-            infoElements.push(<Tooltip pos={pos} />);
+            infoElements.push(<Tooltip pos={pos} />)
           }
 
           if (
@@ -63,21 +65,16 @@ export class ResultViewer extends React.Component {
             typeof ImagePreview.shouldRender === 'function' &&
             ImagePreview.shouldRender(token)
           ) {
-            infoElements.push(<ImagePreview token={token} />);
+            infoElements.push(<ImagePreview token={token} />)
           }
 
           if (infoElements.length > 0) {
-            ReactDOM.render(
-              <div>
-                {infoElements}
-              </div>,
-              tooltipDiv,
-            );
+            ReactDOM.render(<div>{infoElements}</div>, tooltipDiv)
           }
 
-          return tooltipDiv;
+          return tooltipDiv
         },
-      );
+      )
     }
 
     this.viewer = CodeMirror(this._node, {
@@ -92,32 +89,20 @@ export class ResultViewer extends React.Component {
       },
       gutters: ['CodeMirror-foldgutter'],
       info: Boolean(this.props.ResultsTooltip || this.props.ImagePreview),
-      extraKeys: {
-        // Persistent search box in Query Editor
-        'Cmd-F': 'findPersistent',
-        'Ctrl-F': 'findPersistent',
-        'Cmd-G': 'findPersistent',
-        'Ctrl-G': 'findPersistent',
-
-        // Editor improvements
-        'Ctrl-Left': 'goSubwordLeft',
-        'Ctrl-Right': 'goSubwordRight',
-        'Alt-Left': 'goGroupLeft',
-        'Alt-Right': 'goGroupRight',
-      },
-    });
+      extraKeys: commonKeys,
+    })
   }
 
   shouldComponentUpdate(nextProps) {
-    return this.props.value !== nextProps.value;
+    return this.props.value !== nextProps.value
   }
 
   componentDidUpdate() {
-    this.viewer.setValue(this.props.value || '');
+    this.viewer.setValue(this.props.value || '')
   }
 
   componentWillUnmount() {
-    this.viewer = null;
+    this.viewer = null
   }
 
   render() {
@@ -125,10 +110,10 @@ export class ResultViewer extends React.Component {
       <div
         className="result-window"
         ref={node => {
-          this._node = node;
+          this._node = node
         }}
       />
-    );
+    )
   }
 
   /**
@@ -136,13 +121,13 @@ export class ResultViewer extends React.Component {
    * React component.
    */
   getCodeMirror() {
-    return this.viewer;
+    return this.viewer
   }
 
   /**
    * Public API for retrieving the DOM client height for this component.
    */
   getClientHeight() {
-    return this._node && this._node.clientHeight;
+    return this._node && this._node.clientHeight
   }
 }
