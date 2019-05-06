@@ -4,12 +4,11 @@
  *  This source code is licensed under the MIT license found in the
  *  LICENSE file in the root directory of this source tree.
  */
-import PropTypes from 'prop-types'
-import React from 'react'
+import PropTypes from 'prop-types';
+import React from 'react';
 
-import commonKeys from '../utility/commonKeys'
-import onHasCompletion from '../utility/onHasCompletion'
-
+import commonKeys from '../utility/commonKeys';
+import onHasCompletion from '../utility/onHasCompletion';
 
 /**
  * VariableEditor
@@ -133,6 +132,7 @@ export class VariableEditor extends React.Component {
         },
 
         ...commonKeys,
+      },
     });
 
     this.editor.on('change', this._onEdit);
