@@ -106,10 +106,14 @@ export class QueryEditor extends React.Component {
       },
       gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter'],
       extraKeys: {
-        'Cmd-Space': () => this.editor.showHint({ completeSingle: true }),
-        'Ctrl-Space': () => this.editor.showHint({ completeSingle: true }),
-        'Alt-Space': () => this.editor.showHint({ completeSingle: true }),
-        'Shift-Space': () => this.editor.showHint({ completeSingle: true }),
+        'Cmd-Space': () =>
+          this.editor.showHint({ completeSingle: true, container: this._node }),
+        'Ctrl-Space': () =>
+          this.editor.showHint({ completeSingle: true, container: this._node }),
+        'Alt-Space': () =>
+          this.editor.showHint({ completeSingle: true, container: this._node }),
+        'Shift-Space': () =>
+          this.editor.showHint({ completeSingle: true, container: this._node }),
 
         'Cmd-Enter': () => {
           if (this.props.onRunQuery) {
